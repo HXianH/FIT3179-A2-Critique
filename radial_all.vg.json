@@ -1,0 +1,122 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 600,
+    "height": 600,
+    "title": {
+        "text": "Contribution Percentage of Each State",
+        "fontSize": 20
+    },
+    "data": {
+        "url": "https://raw.githubusercontent.com/HXianH/Homework-W9/refs/heads/main/normalized_blood_donors_by_year.csv",
+        "format": {
+            "type": "csv"
+        }
+    },
+    "params": [
+        {
+            "name": "year_selected",
+            "value": 2019,
+            "bind": {
+                "input": "range",
+                "min": 2019,
+                "max": 2024,
+                "step": 1,
+                "name": "Year: "
+            }
+        }
+    ],
+    "transform": [
+        {
+            "filter": "datum.year == year_selected"
+        },
+        {
+            "calculate": "toNumber(datum.donations)",
+            "as": "Donations"
+        },
+        {
+            "joinaggregate": [
+                {
+                    "op": "sum",
+                    "field": "Donations",
+                    "as": "OverallTotal"
+                }
+            ],
+            "groupby": ["year"]
+        },
+        {
+            "calculate": "(datum.Donations / datum.OverallTotal) * 100",
+            "as": "Overall_Percentage"
+        }
+    ],
+    "layer": [
+        {
+            "mark": {
+                "type": "arc",
+                "innerRadius": 20,
+                "stroke": "#fff"
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "radiusOffset": 20,
+                "color": "black"
+            },
+            "encoding": {
+                "text": {
+                    "field": "Overall_Percentage",
+                    "type": "quantitative",
+                    "format": ".1f"
+                }
+            }
+        }
+    ],
+    "encoding": {
+        "theta": {
+            "field": "donations",
+            "type": "quantitative",
+            "stack": true
+        },
+        "radius": {
+            "field": "donations",
+            "scale": {
+                "type": "sqrt",
+                "zero": true,
+                "rangeMin": 20
+            }
+        },
+        "color": {
+            "field": "state",
+            "type": "nominal",
+            "scale": {
+                "range": ["#77CDFF", "#F95454", "#508D4E", "#984ea3", "#ff7f00", "#F4CE14", "#a65628", "#f781bf", "#999999", "#E78F81", "#fdae61", "#abdda4", "#E4B1F0"]
+            },
+            "legend": {
+                "title": "State",
+                "orient": "right"
+            }
+        },
+        "tooltip": [
+            {
+                "field": "state",
+                "type": "nominal",
+                "title": "State"
+            },
+            {
+                "field": "donations",
+                "type": "quantitative",
+                "title": "Donations"
+            },
+            {
+                "field": "Overall_Percentage",
+                "type": "quantitative",
+                "title": "Overall Percentage (%)",
+                "format": ".2f"
+            },
+            {
+                "field": "OverallTotal", 
+                "type": "quantitative", 
+                "title": "Overall Total"}
+        ]
+    }
+}

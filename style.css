@@ -1,0 +1,65 @@
+/* Style for the body */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Center align h1 */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 3em;
+    color: #333;
+    font-family: serif;
+}
+
+/* Center align and style for text box */
+.text-box {
+    max-width: 800px;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.text-box p {
+    font-size: 1.1em;
+    color: #666;
+    position: justify;
+}
+
+/* Center align and add spacing between visualizations */
+#choropleth_map, #bubble_plot, #radial_all {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Footer style */
+footer {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background-color: #f1f1f1;
+    bottom: 0;
+}
+
+footer p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+footer a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
